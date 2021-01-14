@@ -1,6 +1,6 @@
 import numpy as np
 import awkward1 as ak
-import awkward
+#import awkward
 
 def awkwardReshape(akArray,npArray):
     return ak.broadcast_arrays(akArray.pt,1.0)[1] * npArray
