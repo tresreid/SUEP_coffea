@@ -1,6 +1,6 @@
 {
 
     "mMed-750_mDark-2_temp-2_decay-darkPhoHad" : [
-        "input/files/PrivateSamples.SUEP_2018_mMed-750_mDark-2_temp-2_decay-darkPhoHad_13TeV-pythia8_n-100_0_RA2AnalysisTree.root"
+        "root://cmseos.fnal.gov//store/user/kdipetri/SUEP/Production_v0.2/2018/NTUP/PrivateSamples.SUEP_2018_mMed-750_mDark-2_temp-2_decay-darkPhoHad_13TeV-pythia8_n-100_0_RA2AnalysisTree.root"
     ]
 }

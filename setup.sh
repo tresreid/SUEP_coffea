@@ -89,8 +89,8 @@ fi
 $ECHO "\nSetting up the activation script for the virtual environment ... "
 sed -i '40s/.*/VIRTUAL_ENV="$(cd "$(dirname "$(dirname "${BASH_SOURCE[0]}" )")" \&\& pwd)"/' $NAME/bin/activate
 find coffeaenv/bin/ -type f -print0 | xargs -0 -P 4 sed -i '1s/#!.*python$/#!\/usr\/bin\/env python/'
-sed -i "2a source ${LCG}/setup.sh" $NAME/bin/activate
-sed -i "4a source ${LCG}/setup.csh" $NAME/bin/activate.csh
+sed -i "2a source ${LCG}/setup.sh"'\nexport PYTHONPATH=""' $NAME/bin/activate
+sed -i "4a source ${LCG}/setup.csh"'\nsetenv PYTHONPATH ""' $NAME/bin/activate.csh
 
 #$ECHO "\nSetting up the ipython/jupyter kernel ... "
 #storage_dir=$(readlink -f $PWD)
