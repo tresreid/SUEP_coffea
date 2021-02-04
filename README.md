@@ -30,7 +30,7 @@ Remember to replace `<working_directory>` with the directory where you want your
 
 To activate the `coffeaenv` environment and set the Jupyter paths, run the command (every time):
 ```bash
-cd <working_directory>/t-channel_Analysis
+cd <working_directory>/SUEP_coffea
 source init.sh
 ```
 
@@ -42,12 +42,12 @@ This shell function was given to you by the virtual environment.
 
 To remove the virtual environment and the associated files (i.e. inverse of the setup script), you can use the run the following command:
 ```bash
-cd <working_directory>/t-channel_Analysis
+cd <working_directory>/SUEP_coffea
 ./clean.sh
 ```
 The `clean.sh` script has the same `-n` and `-d` options as in the `setup.sh` script.
 
-### Docker Image
+### Docker Image - haven't tried this yet
 
 The directions below will assume you are working on the `cmslpc` cluster, but can be easily adapted for a different computing cluster or local machine. If you're on a local machine, it's likely that all of the singularity commands can be replaced by Docker commands.
 
@@ -70,7 +70,7 @@ export JUPYTER_DATA_DIR=/work/.local/share/jupyter
 export IPYTHONDIR=/work/.ipython
 ```
 
-### Using Jupyter
+### Using Jupyter - haven't tried this yet
 
 To launch a Jupyter server (replace `8NNN` with the unique number):
 ```bash
