@@ -47,22 +47,39 @@ source $LCG/setup.sh
 $ECHO "\nMaking and activiating the virtual environment ... "
 python -m venv --copies $NAME
 source $NAME/bin/activate
+
+
+$ECHO "\nSetup for Dask on LPC ... "
+pypackages=lib/python3.6/site-packages/
+lcgprefix=${LCG}/${pypackages}
+# need to remove python path from LCG to avoid dask conflicts
+export PYTHONPATH=""
+ln -sf ${lcgprefix}/pyxrootd ${NAME}/${pypackages}/pyxrootd
+ln -sf ${lcgprefix}/XRootD ${NAME}/${pypackages}/XRootD
+git clone https://github.com:cms-svj/lpc_dask
+python -m pip install --no-cache-dir dask[dataframe]==2020.12.0 distributed==2020.12.0 dask-jobqueue
+
+
 $ECHO "\nInstalling 'pip' packages ... "
-python -m pip install --no-cache-dir setuptools pip --upgrade
+python -m pip install --no-cache-dir setuptools pip wheel --upgrade
 python -m pip install --no-cache-dir xxhash
 python -m pip install --no-cache-dir uproot4
-if [[ "$DEV" == "1" ]]; then
-	$ECHO "\nInstalling the 'development' version of Coffea ... "
-	python -m pip install --no-cache-dir flake8 pytest coverage
-	git clone https://github.com/CoffeaTeam/coffea
-	cd coffea
-	python -m pip install --no-cache-dir --editable .[dask,spark,parsl]
-	cd ..
-else
-	$ECHO "Installing the 'production' version of Coffea ... "
-	python -m pip install --no-cache-dir coffea[dask,spark,parsl]
-fi
 python -m pip install --no-cache-dir pyjet 
+if [[ "$DEV" == "1" ]]; then
+    $ECHO "\nInstalling the 'development' version of Coffea ... "
+    python -m pip install --no-cache-dir flake8 pytest coverage
+    git clone https://github.com/CoffeaTeam/coffea
+    cd coffea
+    python -m pip install --no-cache-dir --editable .[dask,spark,parsl]
+    cd ..
+else
+    $ECHO "Installing the 'production' version of Coffea ... "
+    python -m pip install --no-cache-dir coffea[dask,spark,parsl]==0.6.47
+fi
+
+# apply patches
+./patch.sh $NAME
+
 
 # Clone TreeMaker for its lists of samples and files
 #$ECHO "\nCloning the TreeMaker repository ..."
@@ -79,6 +96,6 @@ sed -i "4a source ${LCG}/setup.csh" $NAME/bin/activate.csh
 #storage_dir=$(readlink -f $PWD)
 #ipython kernel install --prefix=${storage_dir}/.local --name=$NAME
 #tar -zcf ${NAME}.tar.gz ${NAME}
-#
-#deactivate
+
+deactivate
 $ECHO "\nFINISHED"
